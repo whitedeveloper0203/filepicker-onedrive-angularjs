@@ -1,0 +1,19 @@
+<button class="button button-info" ng-click="openModal()">OneDrive</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close" ng-click="closeModal()">&times;</span>
+      <h2>File Picker for OneDrive</h2>
+    </div>
+    <div class="modal-body">
+      <input id="fileUploadControl" name="fileUploadControl" type="file" />
+      <button class="button button-primary" ng-click="launchOneDrive('save')">Save to OneDrive</button>
+      <button class="button button-primary" ng-click="launchOneDrive('download')">Download from OneDrive</button>
+    </div> 
+  </div>
+
+</div>
