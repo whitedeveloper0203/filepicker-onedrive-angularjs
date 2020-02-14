@@ -6,6 +6,16 @@
  * @param {Object} $attrs - The author of the book.
  */
 function OneDriveController($scope, $element, $attrs) {
+    
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // When the user clicks anywhere outside of the modal, close it
+    document.body.addEventListener('click',function(mEvent){
+        if(mEvent.target == modal)
+            modal.style.display = 'none';
+    },true);
+
     // OneDrive Options
     var odOptions = {
         clientId: $attrs.attrClientId,
@@ -23,7 +33,7 @@ function OneDriveController($scope, $element, $attrs) {
      * @constructor
      */
     $scope.openModal = function() {
-      var modal = document.getElementById("myModal");
+    //   var modal = document.getElementById("myModal");
       modal.style.display = "block";
     };
     /**
@@ -31,7 +41,7 @@ function OneDriveController($scope, $element, $attrs) {
      * @constructor
      */
     $scope.closeModal = function() {
-        var modal = document.getElementById("myModal");
+        // var modal = document.getElementById("myModal");
         modal.style.display = "none";
     }
     /**
