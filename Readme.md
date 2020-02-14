@@ -20,7 +20,7 @@ FilePicker / OneDrive
   Or
 
   ```Bash
-  serve -s -l port
+  serve -s -l :port
   ```
 
 # Usage
@@ -37,7 +37,7 @@ FilePicker / OneDrive
 
 3. Add onedrive-button component into your index.html
   ```html
-  <onedrive-button attr-client-id="ff8253d6-56fe-435e-8bbb-00482af7cb48"></onedrive-button>
+  <onedrive-button attr-client-id="client-id"></onedrive-button>
   ``` 
   
   It requires OneDrive App client-id
