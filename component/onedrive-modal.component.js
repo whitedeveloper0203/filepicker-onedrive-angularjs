@@ -54,7 +54,8 @@ function OneDriveController($scope, $element, $attrs) {
 
         if(action == 'save')
         {
-            odOptions.success = function (files) { alert('success') };
+            odOptions.success = function (files) { alert('success'); };
+            odOptions.error = function (error) { alert(error.message); };
             OneDrive.save(odOptions);
         }
             
