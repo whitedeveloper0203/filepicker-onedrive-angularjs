@@ -1,6 +1,15 @@
 .text-center {
     text-align: center;
 }
+.social-login {
+    margin-bottom: 20px;
+}
+.social-button {
+    cursor: pointer;
+}
+.social-button:hover{
+    background-color: #138496;
+}
 
 /* The Modal (background) */
 .modal {

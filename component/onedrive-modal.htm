@@ -1,4 +1,41 @@
-<button class="button button-info" ng-click="openModal()">OneDrive</button>
+<!--<button class="button button-info" ng-click="openModal()">OneDrive</button>-->
+<div class="social-login">
+  <button class="btn btn-primary" ng-if="!authorized" ng-click="signIn()">OneDrive Login</button>
+  <button class="btn btn-primary" ng-if="authorized" ng-click="signOut()">OneDrive Sign Out</button>
+</div>
+
+<div class="" ng-if="authorized">
+  <input id="fileUploadControl" name="fileUploadControl" type="file" />
+  <button class="btn btn-primary" ng-click="launchOneDrive('save')">Save to OneDrive</button>
+  <button class="btn btn-primary" ng-click="launchOneDrive('download')">Download from OneDrive</button>
+
+  <!-- Show Root Directory -->
+  <div>
+    <button class="btn btn-primary" ng-click="goBack()" ng-if="current_folder_id!='root'">Back</button>
+  </div>
+
+  <table class="table table-striped mt-2">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Created Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="file in files">
+        <td> {{file.name}}</td>
+        <td> {{file.type}}</td>
+        <td> {{file.created_date}}</td>
+        <td>
+          <a class="btn btn-primary" ng-if="file.type=='file'" target="_blank" href="{{file.download}}">Download</a>
+          <a class="btn btn-primary" ng-if="file.type=='folder'" ng-click="openFolder(file.item_id)" href="javascript:void(0);">Open</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
