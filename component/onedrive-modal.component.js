@@ -7,9 +7,6 @@
  */
 function OneDriveController($scope, $location, $element, $attrs) {
     
-    // Get the modal
-    var modal = document.getElementById('myModal');
-
     var params = getUrlParams(window.location.hash);
 
     if(params['access_token'] != '' && params['access_token'] != null) {
@@ -27,68 +24,8 @@ function OneDriveController($scope, $location, $element, $attrs) {
         $scope.current_folder_id = 'root';
         getData('root');    
     }
-
-    // // When the user clicks anywhere outside of the modal, close it
-    // document.body.addEventListener('click',function(mEvent){
-    //     if(mEvent.target == modal)
-    //         modal.style.display = 'none';
-    // },true);
-
-    // // OneDrive Options
-    // var odOptions = {
-    //     clientId: $attrs.attrClientId,
-    //     sourceInputElementId: "fileUploadControl",
-    //     openInNewWindow: true,
-    //     action: '',
-    //     success: function(files) { },
-    //     progress: function(percent) { /* progress handler */ },
-    //     cancel: function() { /* cancel handler */ },
-    //     error: function(error) { /* error handler */ }
-    // }   
-
-    // /**
-    //  * Open Modal
-    //  * @constructor
-    //  */
-    // $scope.openModal = function() {
-    // //   var modal = document.getElementById("myModal");
-    //   modal.style.display = "block";
-    // };
-    // /**
-    //  * Close Modal
-    //  * @constructor
-    //  */
-    // $scope.closeModal = function() {
-    //     // var modal = document.getElementById("myModal");
-    //     modal.style.display = "none";
-    // }
-    // /**
-    //  * Launch OneDrive according to Action
-    //  * @constructor
-    //  * @param {string} action - Action for 'Save' or 'Download'
-    //  */
-    // $scope.launchOneDrive = function(action) { 
-    //     odOptions.action = action;
-
-    //     if(action == 'save')
-    //     {
-    //         odOptions.success = function (files) { alert('success'); };
-    //         odOptions.error = function (error) { alert(error.message); };
-    //         OneDrive.save(odOptions);
-    //     }
-            
-    //     else if(action == 'download')
-    //     {
-    //         odOptions.success = function (files) { 
-    //             files.value.forEach(function(value) {
-    //                 downloadFile(value['@microsoft.graph.downloadUrl'], value['name']);
-    //             })
-    //         };
-    //         OneDrive.open(odOptions);
-    //     }
-    // }
     /**
-     * 
+     * Sign into OneDrive
      */
     $scope.signIn = function() {
         var loginUri = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize?';
@@ -100,7 +37,7 @@ function OneDriveController($scope, $location, $element, $attrs) {
         window.location.href = loginUri;
     }
     /**
-     * 
+     * Sign out OneDrive
      */
     $scope.signOut = function() {
         localStorage.clear();
@@ -108,7 +45,8 @@ function OneDriveController($scope, $location, $element, $attrs) {
         window.location.href = 'http://localhost:3000';
     }
     /**
-     * 
+     * Triggered after clicking folder with item id
+     * @param {*} item_id
      */
     $scope.openFolder = function(item_id) {
     
@@ -123,7 +61,7 @@ function OneDriveController($scope, $location, $element, $attrs) {
         });
     }
     /**
-     * 
+     * Triggered when clicked Go Back Button
      */
     $scope.goBack = function() {
         oneDriveAjax.getParentId($scope.current_folder_id, $scope.access_token, function(response) {
@@ -134,7 +72,7 @@ function OneDriveController($scope, $location, $element, $attrs) {
         })
     }
     /**
-     * 
+     * Parse queries in the URL
      * @param {*} hash 
      */
     function getUrlParams(hash) {
@@ -147,7 +85,8 @@ function OneDriveController($scope, $location, $element, $attrs) {
         return vars;
     }
     /**
-     * 
+     * Get OneDrive data with Path
+     * @param {*} path
      */
     function getData(path) {
         oneDriveAjax.getAllChildren(path, $scope.access_token, function(response) {

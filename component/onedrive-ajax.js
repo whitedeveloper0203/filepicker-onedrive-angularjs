@@ -18,7 +18,7 @@ var oneDriveAjax = {
         })
     },
     /**
-     * Retrieve All Files and Folders
+     * Retrieve Parent ID from Item ID
      * @param {string} item_id -OneDrive Directory
      * @param {string} access_token -OneDrive Token
      */
@@ -35,6 +35,10 @@ var oneDriveAjax = {
             }
         })
     },
+    /**
+     * Parse onedrive data for showing on table
+     * @param {*} data 
+     */
     parseData: function(data) {
         var result = [];
         data.value.forEach(function(entry) {
