@@ -13,6 +13,7 @@ function OneDriveController($scope, $location, $element, $attrs, oneDriveService
     {
         $scope.authorized = true;
         $scope.access_token = params['access_token'];
+        console.log($scope.access_token);
         $scope.current_folder_id = 'root';
         getData('root');    
     }
@@ -61,6 +62,19 @@ function OneDriveController($scope, $location, $element, $attrs, oneDriveService
             else
                 $scope.openFolder(response['parentReference']['id']);
         })
+    }
+    /**
+     * Upload to selected file to OneDrive
+     */
+    $scope.uploadToDrive = function() {
+        var f = document.getElementById('fileUploadControl').files[0];
+        oneDriveService.uploadFile($scope.current_folder_id, $scope.access_token, f, function(response) {
+            if(response.status == '201')
+            {
+                alert('Created!');
+                $scope.openFolder($scope.current_folder_id);
+            }
+        });
     }
     /**
      * Parse queries in the URL
