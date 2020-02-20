@@ -5,22 +5,14 @@
  * @param {Object Array} $element - The author of the book.
  * @param {Object} $attrs - The author of the book.
  */
-function OneDriveController($scope, $location, $element, $attrs) {
-    
+function OneDriveController($scope, $location, $element, $attrs, oneDriveService) {
+
     var params = getUrlParams(window.location.hash);
 
-    if(params['access_token'] != '' && params['access_token'] != null) {
-        localStorage.setItem('__access_token', params['access_token']);
-    }
-
-    var access_token = localStorage.getItem('__access_token');
-    $scope.authorized = false;
-    $scope.files = [];
-
-    if(access_token != null && access_token != '')
+    if(params['access_token'] != '' && params['access_token'] != null)
     {
         $scope.authorized = true;
-        $scope.access_token = access_token;
+        $scope.access_token = params['access_token'];
         $scope.current_folder_id = 'root';
         getData('root');    
     }
@@ -55,16 +47,15 @@ function OneDriveController($scope, $location, $element, $attrs) {
         if(item_id != 'root')
             item_id = `items/${item_id}`;
 
-        oneDriveAjax.getAllChildren(item_id, $scope.access_token, function(response) {
-            $scope.files = oneDriveAjax.parseData(response);
-            $scope.$apply();
+        oneDriveService.getAllChildren(item_id, $scope.access_token, function(response) {
+            $scope.files = oneDriveService.parseData(response);
         });
     }
     /**
      * Triggered when clicked Go Back Button
      */
     $scope.goBack = function() {
-        oneDriveAjax.getParentId($scope.current_folder_id, $scope.access_token, function(response) {
+        oneDriveService.getParentId($scope.current_folder_id, $scope.access_token, function(response) {
             if(response['parentReference']['path'] == '/drive/root:')
                 $scope.openFolder('root');
             else
@@ -89,17 +80,16 @@ function OneDriveController($scope, $location, $element, $attrs) {
      * @param {*} path
      */
     function getData(path) {
-        oneDriveAjax.getAllChildren(path, $scope.access_token, function(response) {
-            $scope.files = oneDriveAjax.parseData(response);
-            $scope.$apply();
+        oneDriveService.getAllChildren(path, $scope.access_token, function(response) {
+            $scope.files = oneDriveService.parseData(response);
         });
     }
 }
 
 angular.
   module('main').
-  component('onedriveButton', {  // This name is what AngularJS uses to match to the `<phone-list>` element.
-    templateUrl: 'component/onedrive-modal.htm',
+  component('onedrive', {  // This name is what AngularJS uses to match to the `<phone-list>` element.
+    templateUrl: 'component/onedrive.htm',
     controller: OneDriveController
 });
 
